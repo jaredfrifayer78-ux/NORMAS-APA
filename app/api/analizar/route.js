@@ -13,7 +13,7 @@ export async function POST(request) {
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
     // Usamos el modelo Flash porque es rapidísimo y maneja documentos largos
     const model = genAI.getGenerativeModel({ 
-      model: "gemini-1.5-flash",
+      model: "gemini-1.5-flash-latest",
       generationConfig: { responseMimeType: "application/json" } // Obligamos a que devuelva JSON
     });
 
