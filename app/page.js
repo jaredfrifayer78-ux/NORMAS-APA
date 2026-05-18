@@ -1,6 +1,7 @@
 "use client";
 import { useState } from 'react';
 import mammoth from 'mammoth';
+import { Document, Packer, Paragraph, TextRun, AlignmentType } from 'docx';
 
 export default function Home() {
   const [file, setFile] = useState(null);
@@ -10,23 +11,81 @@ export default function Home() {
     setFile(e.target.files[0]);
   };
 
+  // Función para construir el Word final usando las reglas APA
+  const generarDocumentoAPA = async (datosIA) => {
+    console.log("⏳ Ensamblando el nuevo documento Word...");
+    
+    // Recorremos el JSON y creamos un párrafo de Word por cada bloque
+    const parrafosWord = datosIA.documento.map(bloque => {
+      
+      // Configuración base para todo el documento: Times New Roman 12, interlineado doble
+      let config = {
+        children: [new TextRun({ text: bloque.contenido, font: "Times New Roman", size: 24 })], // size 24 = 12pt en Word
+        spacing: { line: 480 }, // 480 es interlineado doble exacto
+      };
+
+      // Aplicamos las reglas APA según el tipo de bloque que detectó la IA
+      switch(bloque.tipo) {
+        case 'portada_titulo':
+        case 'titulo_nivel_1':
+          config.alignment = AlignmentType.CENTER;
+          config.children[0] = new TextRun({ text: bloque.contenido, font: "Times New Roman", size: 24, bold: true });
+          break;
+        case 'titulo_nivel_2':
+          config.alignment = AlignmentType.LEFT;
+          config.children[0] = new TextRun({ text: bloque.contenido, font: "Times New Roman", size: 24, bold: true });
+          break;
+        case 'parrafo':
+          config.alignment = AlignmentType.LEFT;
+          config.indent = { firstLine: 720 }; // Sangría de primera línea de 0.5 pulgadas
+          break;
+        case 'cita_bloque':
+          config.indent = { left: 720 }; // Sangría izquierda completa de 0.5 pulgadas
+          break;
+        case 'referencia':
+          config.indent = { left: 720, hanging: 720 }; // Sangría francesa clásica de bibliografías
+          break;
+        default: // portada_autor, portada_institucion...
+          config.alignment = AlignmentType.CENTER;
+          break;
+      }
+      return new Paragraph(config);
+    });
+
+    // Creamos el documento aplicando márgenes APA (1 pulgada = 1440 twips en todos los lados)
+    const doc = new Document({
+      sections: [{
+        properties: {
+          page: { margin: { top: 1440, right: 1440, bottom: 1440, left: 1440 } }
+        },
+        children: parrafosWord
+      }]
+    });
+
+    // Empaquetamos y forzamos la descarga del archivo en el navegador
+    const blob = await Packer.toBlob(doc);
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "Documento_APA_Formateado.docx";
+    a.click();
+    window.URL.revokeObjectURL(url);
+    
+    console.log("✅ ¡Documento generado y descargado!");
+  };
+
   const handleProcess = async () => {
     if (!file) return alert("Por favor, sube un archivo Word primero");
     setLoading(true);
     
     try {
-      console.log("⏳ Extrayendo texto con Mammoth en el navegador...");
-      
-      // 1. Convertimos y extraemos el texto del Word
+      // FASE 1: Extracción
       const arrayBuffer = await file.arrayBuffer();
       const result = await mammoth.extractRawText({ arrayBuffer: arrayBuffer });
       const textoExtraido = result.value;
+      if (!textoExtraido) throw new Error("Documento vacío");
 
-      if (!textoExtraido) throw new Error("El documento parece estar vacío o no se pudo leer.");
-
-      console.log("✅ Texto extraído. Enviando a la Inteligencia Artificial (Gemini)...");
-      
-      // 2. Llamamos a nuestro puente seguro en el backend
+      // FASE 2: Análisis Estructural con IA
       const iaResponse = await fetch('/api/analizar', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -36,16 +95,15 @@ export default function Home() {
       const iaData = await iaResponse.json();
 
       if (iaData.success) {
-        console.log("🧠 Respuesta Estructurada de la IA:\n", iaData.datos);
-        alert("¡La IA analizó el documento exitosamente! Revisa la consola del navegador para ver la magia estructurada en JSON.");
-        
-        // ¡El paso final (Fase 3) será usar la librería 'docx' para convertir este JSON en el Word final!
+        // FASE 3: Generación del nuevo Word
+        await generarDocumentoAPA(iaData.datos);
+        alert("¡Misión cumplida! Revisa tu carpeta de descargas.");
       } else {
         alert("Error de la IA: " + iaData.error);
       }
 
     } catch (error) {
-      console.error("❌ Error:", error);
+      console.error("❌ Error general:", error);
       alert("Hubo un problema: " + error.message);
     } finally {
       setLoading(false);
@@ -81,7 +139,7 @@ export default function Home() {
               : 'bg-blue-600 hover:bg-blue-700 shadow-md'
           }`}
         >
-          {loading ? 'Analizando con IA...' : 'Aplicar Normas APA'}
+          {loading ? 'Aplicando Normas APA...' : 'Aplicar Normas APA'}
         </button>
       </div>
     </main>
