@@ -28,8 +28,10 @@ export default function Home() {
   const generarDocumentoAPA = async (datosIA) => {
     setLoadingText('Compilando estructura física del archivo...');
     const parrafosWord = datosIA.documento.map(bloque => {
+      
+      // CONFIGURACIÓN BASE: Arial 12 (size: 24) con interlineado doble
       let config = {
-        children: [new TextRun({ text: bloque.contenido, font: "Times New Roman", size: 24 })],
+        children: [new TextRun({ text: bloque.contenido, font: "Arial", size: 24 })],
         spacing: { line: 480 },
       };
 
@@ -38,23 +40,30 @@ export default function Home() {
         case 'titulo_nivel_1':
           config.alignment = AlignmentType.CENTER;
           const titulo1 = bloque.contenido.toLowerCase().replace(/\b\w/g, c => c.toUpperCase());
-          config.children[0] = new TextRun({ text: titulo1, font: "Times New Roman", size: 24, bold: true });
+          // Aplicamos Arial 12 en Negrita para Título Nivel 1
+          config.children[0] = new TextRun({ text: titulo1, font: "Arial", size: 24, bold: true });
           break;
+          
         case 'titulo_nivel_2':
           config.alignment = AlignmentType.LEFT;
           const titulo2 = bloque.contenido.toLowerCase().replace(/\b\w/g, c => c.toUpperCase());
-          config.children[0] = new TextRun({ text: titulo2, font: "Times New Roman", size: 24, bold: true });
+          // Aplicamos Arial 12 en Negrita para Título Nivel 2
+          config.children[0] = new TextRun({ text: titulo2, font: "Arial", size: 24, bold: true });
           break;
+          
         case 'parrafo':
           config.alignment = AlignmentType.LEFT;
           config.indent = { firstLine: 720 };
           break;
+          
         case 'cita_bloque':
           config.indent = { left: 720 };
           break;
+          
         case 'referencia':
           config.indent = { left: 720, hanging: 720 };
           break;
+          
         default:
           config.alignment = AlignmentType.CENTER;
           break;
@@ -73,7 +82,7 @@ export default function Home() {
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = "Documento_APA_Perfecto.docx";
+    a.download = "Documento_Aplicado_APA.docx";
     a.click();
     window.URL.revokeObjectURL(url);
   };
