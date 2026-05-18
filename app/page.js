@@ -140,7 +140,7 @@ export default function Home() {
         <div className="flex items-center gap-3">
           <div className={`font-black text-xl tracking-tighter flex items-center gap-2.5 cursor-pointer ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`} onClick={() => setView('landing')}>
             <span className="w-3 h-3 bg-indigo-500 rounded-full shadow-[0_0_15px_#6366f1]"></span>
-            FORMATIA <span className={`text-[10px] font-mono font-bold border px-2 py-0.5 rounded ${theme === 'dark' ? 'text-slate-500 border-[#141419] bg-[#0c0c0e]' : 'text-slate-400 border-slate-200 bg-slate-50'}`}>PRO_ENGINE</span>
+            JareDesigns Solutions <span className={`text-[10px] font-mono font-bold border px-2 py-0.5 rounded ${theme === 'dark' ? 'text-slate-500 border-[#141419] bg-[#0c0c0e]' : 'text-slate-400 border-slate-200 bg-slate-50'}`}>PRO_ENGINE</span>
           </div>
         </div>
 
