@@ -14,9 +14,10 @@ export default function Home() {
   const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({ target: containerRef });
   
-  const heroScale = useTransform(scrollYProgress, [0, 0.2], [1, 0.95]);
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
-  const bentoY = useTransform(scrollYProgress, [0, 0.3], [100, 0]);
+  // Animaciones de scroll suavizadas para evitar saltos bruscos en la vista
+  const heroScale = useTransform(scrollYProgress, [0, 0.15], [1, 0.98]);
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.15], [1, 0]);
+  const bentoY = useTransform(scrollYProgress, [0, 0.25], [60, 0]);
 
   const handleFileChange = (e) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -112,17 +113,17 @@ export default function Home() {
   };
 
   return (
-    <div ref={containerRef} className="min-h-screen bg-[#0c0c0e] text-[#f1f1f3] font-sans antialiased overflow-x-hidden selection:bg-indigo-500/40 relative">
+    <div ref={containerRef} className="min-h-screen bg-[#f8fafc] text-[#0f172a] font-sans antialiased overflow-x-hidden selection:bg-indigo-600/10 relative">
       
-      {/* Grilla técnica de fondo (Figma Canvas Grid) */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#1f1f24_1px,transparent_1px),linear-gradient(to_bottom,#1f1f24_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] opacity-25 pointer-events-none"></div>
+      {/* Grilla de diseño milimétrica en gris claro (Figma Workspace Style) */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#e2e8f0_1px,transparent_1px),linear-gradient(to_bottom,#e2e8f0_1px,transparent_1px)] bg-[size:3rem_3rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_80%,transparent_100%)] opacity-40 pointer-events-none"></div>
 
-      {/* Navbar Minimalista de Alta Precisión */}
-      <nav className="w-full h-16 border-b border-[#1f1f24] bg-[#0c0c0e]/80 backdrop-blur-md flex justify-between items-center px-6 fixed top-0 left-0 right-0 z-50">
+      {/* Navbar de Alta Precisión */}
+      <nav className="w-full h-16 border-b border-slate-200 bg-white/80 backdrop-blur-md flex justify-between items-center px-6 fixed top-0 left-0 right-0 z-50 shadow-sm shadow-slate-100/50">
         <div className="flex items-center gap-6">
-          <div className="font-black text-lg tracking-tighter text-white flex items-center gap-2 cursor-pointer" onClick={() => setView('landing')}>
-            <span className="w-3 h-3 bg-indigo-500 rounded-full shadow-[0_0_10px_#6366f1]"></span>
-            FORMATIA <span className="text-xs font-mono font-normal text-[#6b6b76] border border-[#1f1f24] px-1.5 py-0.5 rounded">v1.0.0</span>
+          <div className="font-extrabold text-base tracking-tight text-slate-900 flex items-center gap-2 cursor-pointer" onClick={() => setView('landing')}>
+            <span className="w-2.5 h-2.5 bg-indigo-600 rounded-full shadow-[0_0_8px_rgba(79,70,229,0.4)]"></span>
+            JareDesign Solutions <span className="text-[10px] font-mono font-normal text-slate-400 border border-slate-200 px-1.5 py-0.5 rounded bg-slate-50">v1.0.0</span>
           </div>
         </div>
         <div className="flex items-center gap-4">
@@ -130,8 +131,8 @@ export default function Home() {
             onClick={() => setView(view === 'landing' ? 'app' : 'landing')}
             className={`text-xs font-bold uppercase tracking-wider px-5 py-2.5 rounded transition-all border ${
               view === 'landing' 
-                ? 'bg-white text-black border-white hover:bg-transparent hover:text-white' 
-                : 'bg-transparent text-[#6b6b76] border-[#1f1f24] hover:text-white'
+                ? 'bg-slate-950 text-white border-slate-950 hover:bg-slate-800' 
+                : 'bg-white text-slate-600 border-slate-200 hover:text-slate-900 hover:border-slate-300'
             }`}
           >
             {view === 'landing' ? 'Abrir Consola' : 'Ver Manifiesto'}
@@ -142,97 +143,95 @@ export default function Home() {
       <AnimatePresence mode="wait">
         
         {/* =======================
-            VISTA 1: FIGMA LANDING PAGE
+            VISTA 1: FIGMA LIGHT LANDING PAGE
         ======================== */}
         {view === 'landing' && (
           <motion.div 
             key="landing"
-            className="pt-32 pb-32 max-w-7xl mx-auto px-6 relative z-10"
+            className="pt-36 pb-32 max-w-6xl mx-auto px-6 relative z-10"
           >
-            {/* Hero Seccion con Tipografía de Impacto */}
-            <motion.div style={{ scale: heroScale, opacity: heroOpacity }} className="text-left max-w-5xl mb-24 pt-10">
-              <p className="font-mono text-xs uppercase tracking-[0.25em] text-indigo-400 mb-4 font-semibold">
-                {"// AUTOMATIZACIÓN DE FORMATO ACADÉMICO"}
+            {/* Hero Section con Contraste de Alta Definición */}
+            <motion.div style={{ scale: heroScale, opacity: heroOpacity }} className="text-left max-w-4xl mb-24 pt-6">
+              <p className="font-mono text-xs uppercase tracking-[0.2em] text-indigo-600 mb-5 font-bold">
+                {"// COMPILADOR AUTOMÁTICO DE NORMAS APA"}
               </p>
-              <h1 className="text-6xl md:text-8xl font-extrabold tracking-tight text-white mb-8 leading-[0.95] font-black">
+              <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight text-slate-900 mb-6 leading-[1.1]">
                 Estructura impecable. <br />
-                Diseño imperceptible.
+                Diseño automatizado.
               </h1>
-              <p className="text-xl md:text-2xl text-[#6b6b76] max-w-3xl mb-12 leading-relaxed font-normal">
-                No alteramos una sola palabra de tu investigación. Nuestro motor de análisis sintáctico segmenta el texto original y lo reconstruye en un archivo Word nativo bajo los estándares más estrictos del manual APA 7.
+              <p className="text-lg md:text-xl text-slate-600 max-w-3xl mb-10 leading-relaxed font-normal">
+                No alteramos una sola palabra de tu investigación. Nuestro motor segmenta el contenido original y lo reconstruye en un archivo Word nativo bajo los estándares físicos del manual APA 7ma edición.
               </p>
               <button 
                 onClick={() => setView('app')}
-                className="group inline-flex items-center gap-4 bg-[#1f1f24] hover:bg-white text-white hover:text-black font-bold text-base px-8 py-4 rounded border border-[#2e2e35] hover:border-white transition-all shadow-2xl active:scale-95"
+                className="group inline-flex items-center gap-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm uppercase tracking-wider px-7 py-4 rounded-xl transition-all shadow-md shadow-indigo-200 active:scale-95"
               >
-                Inicializar Herramienta 
-                <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                Inicializar Workspace 
+                <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
               </button>
             </motion.div>
 
-            {/* Bento Grid (Estructura Asimétrica Tipo Figma) */}
-            <motion.div style={{ y: bentoY }} className="grid md:grid-cols-3 gap-4 max-w-6xl mx-auto text-left">
+            {/* Bento Grid Asimétrico en Alta Legibilidad */}
+            <motion.div style={{ y: bentoY }} className="grid md:grid-cols-3 gap-5 max-w-6xl mx-auto text-left">
               
-              {/* Bloque 1: Títulos (Izquierda) */}
-              <div className="bg-[#131316] border border-[#1f1f24] p-10 rounded-2xl md:col-span-2 flex flex-col justify-between group hover:border-[#2e2e35] transition-colors relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500/5 rounded-full blur-3xl pointer-events-none"></div>
+              {/* Tarjeta 1: Títulos */}
+              <div className="bg-white border border-slate-200/80 p-8 rounded-2xl md:col-span-2 flex flex-col justify-between shadow-sm hover:shadow-md hover:border-slate-300 transition-all relative overflow-hidden">
                 <div>
-                  <Layers className="text-indigo-400 mb-6 w-8 h-8" />
-                  <h3 className="text-2xl font-bold text-white mb-3 tracking-tight">Normalización de Títulos de Nivel 1 y 2</h3>
-                  <p className="text-[#6b6b76] leading-relaxed max-w-md">
-                    El motor identifica títulos escritos accidentalmente en mayúsculas sostenidas y los transforma automáticamente a mayúsculas iniciales, centrados y en negrita según el protocolo de la APA.
+                  <Layers className="text-indigo-600 mb-5 w-6 h-6" />
+                  <h3 className="text-xl font-bold text-slate-900 mb-2 tracking-tight">Normalización de Títulos</h3>
+                  <p className="text-slate-600 text-sm leading-relaxed max-w-lg">
+                    El sistema detecta títulos escritos erróneamente en mayúsculas sostenidas y los transforma a formato de mayúsculas iniciales, centrados y en negrita, eliminando las correcciones manuales tediosas.
                   </p>
                 </div>
-                <div className="mt-12 font-mono text-xs text-[#3a3a44] border-t border-[#1f1f24] pt-4 flex gap-4">
+                <div className="mt-8 font-mono text-[10px] text-slate-400 border-t border-slate-100 pt-4 flex gap-4">
                   <span>INPUT: TEXT_RAW</span>
                   <span>➔</span>
-                  <span className="text-indigo-400">OUTPUT: TITLE_CASE_VALIDATED</span>
+                  <span className="text-indigo-600 font-bold">OUTPUT: TITLE_CASE_APA</span>
                 </div>
               </div>
 
-              {/* Bloque 2: Geometría de Página (Derecha) */}
-              <div className="bg-[#131316] border border-[#1f1f24] p-10 rounded-2xl flex flex-col justify-between group hover:border-[#2e2e35] transition-colors">
+              {/* Tarjeta 2: Geometría */}
+              <div className="bg-white border border-slate-200/80 p-8 rounded-2xl flex flex-col justify-between shadow-sm hover:shadow-md hover:border-slate-300 transition-all">
                 <div>
-                  <FileCheck2 className="text-emerald-400 mb-6 w-8 h-8" />
-                  <h3 className="text-2xl font-bold text-white mb-3 tracking-tight">Geometría de Página</h3>
-                  <p className="text-[#6b6b76] leading-relaxed">
-                    Márgenes exactos de 1 pulgada en los 4 flancos de la página, interlineado doble de 480 twips y sangrías de primera línea precisas de 0.5 pulgadas.
+                  <FileCheck2 className="text-emerald-600 mb-5 w-6 h-6" />
+                  <h3 className="text-xl font-bold text-slate-900 mb-2 tracking-tight">Geometría de Página</h3>
+                  <p className="text-slate-600 text-sm leading-relaxed">
+                    Márgenes exactos de 1 pulgada en los 4 flancos, interlineado doble reglamentario de 480 twips y sangrías de primera línea calibradas a 0.5 pulgadas.
                   </p>
                 </div>
-                <div className="mt-6 font-mono text-xs text-[#3a3a44]">
-                  [MÁRGENES: 1440 twips]
+                <div className="mt-6 font-mono text-[10px] text-slate-400 bg-slate-50 border border-slate-100 p-2 rounded text-center">
+                  [MÁRGENES: 1440 TWIPS CONSTANTE]
                 </div>
               </div>
 
-              {/* Bloque RESTRICCIÓN */}
-              <div className="bg-[#131316] border border-[#1f1f24] p-10 rounded-2xl md:col-span-1 flex flex-col justify-between group hover:border-amber-500/30 transition-colors relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/5 rounded-full blur-2xl pointer-events-none"></div>
+              {/* Tarjeta 3: Restricción / Honestidad del producto */}
+              <div className="bg-amber-50/40 border border-amber-200/70 p-8 rounded-2xl md:col-span-1 flex flex-col justify-between shadow-sm hover:bg-amber-50/70 transition-all relative overflow-hidden">
                 <div>
-                  <AlertTriangle className="text-amber-500 mb-6 w-8 h-8" />
-                  <h3 className="text-2xl font-bold text-white mb-3 tracking-tight">Alcance del Motor</h3>
-                  <p className="text-[#6b6b76] text-sm leading-relaxed">
-                    Esta herramienta se enfoca estrictamente en perfeccionar la **estructura semántica y el texto crudo**. Si tu documento de origen contiene objetos complejos como <span className="text-amber-500/80 font-medium">tablas o imágenes, estas no se exportarán</span>.
+                  <AlertTriangle className="text-amber-600 mb-5 w-6 h-6" />
+                  <h3 className="text-xl font-bold text-amber-950 mb-2 tracking-tight">Alcance del Motor</h3>
+                  <p className="text-amber-900/80 text-sm leading-relaxed">
+                    Esta solución procesa de forma exclusiva la **estructura de texto crudo**. Si tu documento de origen posee elementos como <span className="text-amber-800 font-bold">tablas o imágenes, estas no se exportarán</span>.
                   </p>
                 </div>
-                <div className="mt-6 font-mono text-[10px] text-amber-500/60 bg-amber-500/5 border border-amber-500/10 p-3 rounded-lg">
-                  {"// REGLA: Aplica el formato aquí y luego reinserta tus gráficos por copiado clásico en el Word final."}
+                <div className="mt-6 font-mono text-[10px] text-amber-700 bg-amber-100/40 border border-amber-200/40 p-3 rounded-lg leading-relaxed">
+                  {"// REGLA: Aplica el formato al texto aquí y reinserta tus gráficos manualmente en el Word resultante."}
                 </div>
               </div>
 
-              {/* Bloque Privacidad */}
-              <div className="bg-[#131316] border border-[#1f1f24] p-10 rounded-2xl md:col-span-2 flex flex-col justify-between group hover:border-[#2e2e35] transition-colors">
+              {/* Tarjeta 4: Privacidad */}
+              <div className="bg-white border border-slate-200/80 p-8 rounded-2xl md:col-span-2 flex flex-col justify-between shadow-sm hover:shadow-md hover:border-slate-300 transition-all">
                 <div>
-                  <div className="flex items-center gap-3 mb-4">
-                    <Code className="text-blue-400 w-6 h-6" />
-                    <span className="font-mono text-xs uppercase tracking-wider text-blue-400 font-bold">Procesamiento Local</span>
+                  <div className="flex items-center gap-2 mb-4">
+                    <Code className="text-blue-600 w-5 h-5" />
+                    <span className="font-mono text-[10px] uppercase tracking-wider text-blue-600 font-bold">Aislamiento de Datos</span>
                   </div>
-                  <h3 className="text-2xl font-bold text-white mb-2 tracking-tight">Privacidad por Arquitectura</h3>
-                  <p className="text-[#6b6b76] leading-relaxed">
-                    La extracción binaria se ejecuta por completo del lado del cliente usando la memoria efímera del navegador. Tus investigaciones confidenciales jamás tocan un almacenamiento secundario.
+                  <h3 className="text-xl font-bold text-slate-900 mb-2 tracking-tight">Privacidad por Arquitectura</h3>
+                  <p className="text-slate-600 text-sm leading-relaxed">
+                    La extracción del buffer binario ocurre en el entorno local de tu navegador. Tus investigaciones y propiedad intelectual jamás tocan bases de datos permanentes ni registros externos.
                   </p>
                 </div>
-                <div className="mt-6 font-mono text-xs text-[#3a3a44]">
-                  [CLIENT_SIDE_PARSING: TRUE]
+                <div className="mt-6 font-mono text-[10px] text-slate-400">
+                  [SECURE_CLIENT_PARSING: ON]
                 </div>
               </div>
 
@@ -241,35 +240,29 @@ export default function Home() {
         )}
 
         {/* =======================
-            VISTA 2: LA CONSOLA DE TRABAJO (DASHBOARD)
+            VISTA 2: LA CONSOLA DE TRABAJO (WORKSPACE)
         ======================== */}
         {view === 'app' && (
           <motion.div 
             key="app"
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
             className="pt-24 pb-24 px-6 max-w-4xl mx-auto flex flex-col items-center justify-center min-h-screen"
           >
-            <div className="w-full max-w-xl flex justify-start mb-6">
+            <div className="w-full max-w-xl flex justify-start mb-4">
               <button 
                 onClick={() => { setView('landing'); setFile(null); setStatus('idle'); }}
-                className="flex items-center gap-2 text-[#6b6b76] hover:text-white transition-colors font-mono text-xs uppercase tracking-wider"
+                className="flex items-center gap-1.5 text-slate-400 hover:text-slate-800 transition-colors font-mono text-[10px] uppercase tracking-wider"
               >
-                <ChevronLeft size={16} /> [ Cerrar Consola ]
+                <ChevronLeft size={14} /> [ Regresar al inicio ]
               </button>
             </div>
 
-            {/* Contenedor de la Herramienta Estilo Terminal Limpia */}
-            <div className="w-full max-w-xl bg-[#131316] border border-[#1f1f24] rounded-2xl p-8 md:p-12 relative">
+            {/* Espacio de trabajo limpio estilo interfaz Figma */}
+            <div className="w-full max-w-xl bg-white border border-slate-200 rounded-2xl p-8 md:p-10 shadow-md relative">
               
-              <div className="flex items-center gap-1.5 absolute top-4 left-6">
-                <span className="w-2.5 h-2.5 rounded-full bg-[#1f1f24]"></span>
-                <span className="w-2.5 h-2.5 rounded-full bg-[#1f1f24]"></span>
-                <span className="w-2.5 h-2.5 rounded-full bg-[#1f1f24]"></span>
-              </div>
-
-              <div className="text-left mb-8 border-b border-[#1f1f24] pb-6">
-                <h2 className="text-xl font-bold text-white tracking-tight">Compilador Estructural APA</h2>
-                <p className="text-sm text-[#6b6b76] mt-1 font-mono">Carga un archivo de origen binario para iniciar el mapeo.</p>
+              <div className="text-left mb-8 border-b border-slate-100 pb-5">
+                <h2 className="text-lg font-bold text-slate-900 tracking-tight">Procesador Estructural</h2>
+                <p className="text-xs text-slate-400 mt-0.5 font-mono">Monta el payload original para ejecutar el mapeo sintáctico.</p>
               </div>
 
               <AnimatePresence mode="wait">
@@ -282,16 +275,16 @@ export default function Home() {
                         onChange={handleFileChange}
                         className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
                       />
-                      <div className={`border border-dashed rounded-xl p-10 flex flex-col items-center justify-center transition-colors duration-200
+                      <div className={`border-2 border-dashed rounded-xl p-10 flex flex-col items-center justify-center transition-all duration-200
                         ${file 
-                          ? 'border-indigo-500 bg-indigo-500/5' 
-                          : 'border-[#1f1f24] bg-[#0c0c0e]/50 group-hover:border-[#2e2e35]'}`}>
-                        <UploadCloud className={`mb-4 ${file ? 'text-indigo-400' : 'text-[#3a3a44]'} w-10 h-10`} />
-                        <h3 className="text-sm font-semibold text-white mb-1 font-mono">
-                          {file ? file.name : "SELECCIONAR_ARCHIVO.DOCX"}
+                          ? 'border-indigo-500 bg-indigo-50/30' 
+                          : 'border-slate-200 bg-slate-50/50 group-hover:border-slate-300 group-hover:bg-slate-50'}`}>
+                        <UploadCloud className={`mb-3 ${file ? 'text-indigo-600' : 'text-slate-400'} w-8 h-8`} />
+                        <h3 className="text-xs font-bold text-slate-800 mb-1 font-mono tracking-tight">
+                          {file ? file.name.toUpperCase() : "SELECCIONAR_ORIGEN.DOCX"}
                         </h3>
-                        <p className="text-xs text-[#6b6b76]">
-                          {file ? "Payload cargado exitosamente" : "Arrastra o haz clic para montar"}
+                        <p className="text-[11px] text-slate-400 text-center">
+                          {file ? "Carga verificada de datos" : "Arrastra o selecciona el archivo"}
                         </p>
                       </div>
                     </div>
@@ -299,25 +292,25 @@ export default function Home() {
                     <button 
                       onClick={handleProcess}
                       disabled={!file}
-                      className={`mt-6 w-full py-4 rounded font-bold text-xs uppercase tracking-widest transition-all font-mono border ${
+                      className={`mt-6 w-full py-4 rounded-xl font-bold text-xs uppercase tracking-widest transition-all font-mono border ${
                         !file 
-                          ? 'bg-transparent text-[#3a3a44] border-[#1f1f24] cursor-not-allowed' 
-                          : 'bg-white text-black border-white hover:bg-transparent hover:text-white'
+                          ? 'bg-slate-100 text-slate-400 border-slate-200 cursor-not-allowed' 
+                          : 'bg-slate-950 text-white border-slate-950 hover:bg-slate-800 shadow-sm'
                       }`}
                     >
-                      EJECUTAR_PROCESAMIENTO_APA
+                      Compilar a Formato APA
                     </button>
                   </motion.div>
                 )}
 
                 {status === 'loading' && (
-                  <motion.div key="loading" className="flex flex-col items-center justify-center py-12 text-left w-full">
-                    <div className="w-full bg-[#0c0c0e] border border-[#1f1f24] p-5 rounded-lg font-mono text-xs text-[#6b6b76] space-y-2">
-                      <div className="flex items-center gap-2">
-                        <Loader2 className="w-3.5 h-3.5 text-indigo-400 animate-spin" />
-                        <span className="text-white">STATUS: EXECUTING_TASK</span>
+                  <motion.div key="loading" className="flex flex-col items-center justify-center py-6 text-left w-full">
+                    <div className="w-full bg-slate-50 border border-slate-200 p-5 rounded-xl font-mono text-xs text-slate-500 space-y-2">
+                      <div className="flex items-center gap-2 font-bold text-slate-800">
+                        <Loader2 className="w-3.5 h-3.5 text-indigo-600 animate-spin" />
+                        <span>STATUS: PROCESSING_DATA</span>
                       </div>
-                      <div className="text-indigo-400 border-t border-[#1f1f24] pt-2 mt-2 animate-pulse">
+                      <div className="text-indigo-600 border-t border-slate-200/60 pt-2 mt-2 animate-pulse font-medium">
                         &gt; {loadingText}
                       </div>
                     </div>
@@ -325,16 +318,16 @@ export default function Home() {
                 )}
 
                 {status === 'success' && (
-                  <motion.div key="success" className="flex flex-col items-center justify-center py-6 text-center">
-                    <CheckCircle className="w-16 h-16 text-emerald-400 mb-4" />
-                    <h3 className="text-lg font-bold text-white font-mono">TASK_COMPLETED_SUCCESSFULLY</h3>
-                    <p className="text-xs text-[#6b6b76] mt-1 max-w-sm">El árbol de datos de la IA ha sido inyectado en un nuevo contenedor Word y descargado localmente.</p>
+                  <motion.div key="success" className="flex flex-col items-center justify-center py-4 text-center">
+                    <CheckCircle className="w-12 h-12 text-emerald-600 mb-4" />
+                    <h3 className="text-base font-bold text-slate-900 font-mono">EJECUCIÓN_EXITOSA</h3>
+                    <p className="text-xs text-slate-500 mt-1 max-w-xs leading-relaxed">Los nodos estructurales validados han sido inyectados en el nuevo archivo Word y descargados de forma automática.</p>
                     
                     <button 
                       onClick={() => { setFile(null); setStatus('idle'); }}
-                      className="mt-8 px-6 py-3 border border-[#1f1f24] hover:border-white text-white font-mono text-xs uppercase tracking-wider rounded transition-colors"
+                      className="mt-6 px-5 py-2.5 border border-slate-200 hover:border-slate-400 text-slate-600 font-mono text-xs uppercase tracking-wider rounded-lg transition-colors"
                     >
-                      Montar nuevo payload
+                      Procesar nuevo archivo
                     </button>
                   </motion.div>
                 )}
