@@ -3,7 +3,7 @@ import { useState, useRef } from 'react';
 import mammoth from 'mammoth';
 import { Document, Packer, Paragraph, TextRun, AlignmentType } from 'docx';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
-import { UploadCloud, FileText, CheckCircle, Loader2, ChevronLeft, ArrowRight, Layers, FileCheck2, Code, AlertTriangle, Eye } from 'lucide-react';
+import { UploadCloud, FileText, CheckCircle, Loader2, ChevronLeft, ArrowRight, Layers, FileCheck2, Code, AlertTriangle } from 'lucide-react';
 
 export default function Home() {
   const [view, setView] = useState('landing');
@@ -14,7 +14,6 @@ export default function Home() {
   const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({ target: containerRef });
   
-  // Animaciones de Scroll ultra-fluidas para pantallas grandes
   const heroScale = useTransform(scrollYProgress, [0, 0.12], [1, 0.96]);
   const heroOpacity = useTransform(scrollYProgress, [0, 0.12], [1, 0]);
   const bentoY = useTransform(scrollYProgress, [0, 0.2], [40, 0]);
@@ -115,7 +114,7 @@ export default function Home() {
   return (
     <div ref={containerRef} className="min-h-screen bg-[#050507] text-[#ffffff] font-sans antialiased overflow-x-hidden selection:bg-indigo-500/30 relative">
       
-      {/* Figma Blueprint Grid Lines (Hiper nítido) */}
+      {/* Figma Blueprint Grid Lines */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#141419_1px,transparent_1px),linear-gradient(to_bottom,#141419_1px,transparent_1px)] bg-[size:5rem_5rem] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_0%,#000_80%,transparent_100%)] opacity-70 pointer-events-none"></div>
 
       {/* Header Premium de Alta Fidelidad */}
@@ -123,7 +122,7 @@ export default function Home() {
         <div className="flex items-center gap-3">
           <div className="font-black text-xl tracking-tighter text-white flex items-center gap-2.5 cursor-pointer" onClick={() => setView('landing')}>
             <span className="w-3 h-3 bg-indigo-500 rounded-full shadow-[0_0_15px_#6366f1]"></span>
-            JareDesign SOLUTIONS <span className="text-[10px] font-mono font-bold text-slate-500 border border-[#141419] px-2 py-0.5 rounded bg-[#0c0c0e]">PRO_ENGINE</span>
+            JareDesign Solutions <span className="text-[10px] font-mono font-bold text-slate-500 border border-[#141419] px-2 py-0.5 rounded bg-[#0c0c0e]">PRO_ENGINE</span>
           </div>
         </div>
         <button 
@@ -142,7 +141,7 @@ export default function Home() {
         {view === 'landing' && (
           <motion.div key="landing" className="pt-44 pb-40 max-w-7xl mx-auto px-8 relative z-10">
             
-            {/* Hero Masivo Estilo Apple/Figma */}
+            {/* Hero Seccion masivo */}
             <motion.div style={{ scale: heroScale, opacity: heroOpacity }} className="text-left max-w-5xl mb-32">
               <div className="inline-flex items-center gap-2 px-3 py-1.5 mb-6 rounded-full bg-indigo-950/40 border border-indigo-800/40 text-indigo-400 text-xs font-mono tracking-wider uppercase">
                 <span>⚡ NO_MORE_TEMPLATE_CLICHES</span>
@@ -163,10 +162,10 @@ export default function Home() {
               </button>
             </motion.div>
 
-            {/* Bento Grid con Muestras Visuales de Producto */}
+            {/* Bento Grid */}
             <motion.div style={{ y: bentoY }} className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto text-left">
               
-              {/* Tarjeta 1: Demostración de Títulos (Ocupa 2 columnas) */}
+              {/* Tarjeta 1: Demostración de Títulos */}
               <div className="bg-[#0c0c0e] border border-[#141419] p-10 rounded-2xl md:col-span-2 flex flex-col justify-between hover:border-slate-800 transition-all group relative overflow-hidden">
                 <div className="max-w-md">
                   <Layers className="text-indigo-500 mb-6 w-8 h-8" />
@@ -176,12 +175,12 @@ export default function Home() {
                   </p>
                 </div>
                 
-                {/* Simulador de UI dentro de la tarjeta */}
+                {/* Simulador corregido sin comillas desprotegidas */}
                 <div className="bg-[#050507] border border-[#141419] rounded-xl p-6 font-mono text-xs space-y-4 shadow-2xl relative">
                   <span className="absolute top-2 right-3 text-[9px] text-slate-600">LIVE_COMPILER</span>
                   <div className="flex items-center gap-4 text-red-400 bg-red-950/20 p-3 rounded border border-red-900/30 opacity-60">
                     <span className="bg-red-500 text-black px-1.5 font-bold rounded-sm">RAW</span>
-                    <span className="line-through tracking-wider font-bold">"1. INTRODUCCIÓN GENERAL DE LA TESIS"</span>
+                    <span className="line-through tracking-wider font-bold">{"\"1. INTRODUCCIÓN GENERAL DE LA TESIS\""}</span>
                   </div>
                   <div className="flex items-center gap-4 text-emerald-400 bg-emerald-950/20 p-3 rounded border border-emerald-900/30 shadow-[0_0_15px_rgba(16,185,129,0.1)]">
                     <span className="bg-emerald-400 text-black px-1.5 font-bold rounded-sm">APA</span>
@@ -190,7 +189,7 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Tarjeta 2: Geometría de Página */}
+              {/* Tarjeta 2: Geometría */}
               <div className="bg-[#0c0c0e] border border-[#141419] p-10 rounded-2xl flex flex-col justify-between hover:border-slate-800 transition-all group">
                 <div>
                   <FileCheck2 className="text-emerald-500 mb-6 w-8 h-8" />
@@ -199,7 +198,6 @@ export default function Home() {
                     Ajuste forzado de márgenes a 1 pulgada periférica constante, interlineado doble de 480 twips y sangría francesa milimétrica.
                   </p>
                 </div>
-                {/* Elemento Gráfico de Regla */}
                 <div className="mt-8 bg-[#050507] border border-[#141419] h-16 rounded-xl flex items-center justify-between px-4 font-mono text-[10px] text-slate-600 relative overflow-hidden">
                   <div className="absolute top-0 left-4 bottom-0 w-[1px] bg-indigo-500/50 shadow-[0_0_8px_#6366f1]"></div>
                   <span>| | | | | | | | 1.0 INCH | | | | | | | |</span>
@@ -207,7 +205,7 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Tarjeta 3: RESTRICCIÓN (Honestidad de producto impactante) */}
+              {/* Tarjeta 3: Restricciones */}
               <div className="bg-[#0c0c0e] border border-amber-900/30 p-10 rounded-2xl md:col-span-1 flex flex-col justify-between hover:border-amber-700/50 transition-all relative overflow-hidden group">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/5 rounded-full blur-3xl pointer-events-none"></div>
                 <div>
@@ -222,7 +220,7 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Tarjeta 4: Seguridad y Aislamiento */}
+              {/* Tarjeta 4: Seguridad */}
               <div className="bg-[#0c0c0e] border border-[#141419] p-10 rounded-2xl md:col-span-2 flex flex-col justify-between hover:border-slate-800 transition-all group">
                 <div>
                   <div className="flex items-center gap-2 mb-4">
@@ -255,7 +253,6 @@ export default function Home() {
               </button>
             </div>
 
-            {/* Consola de Compilación Estilo Hardware */}
             <div className="w-full max-w-2xl bg-[#0c0c0e] border border-[#141419] rounded-2xl p-10 md:p-14 shadow-2xl relative">
               
               <div className="flex items-center gap-2 absolute top-5 left-8">
@@ -266,7 +263,7 @@ export default function Home() {
 
               <div className="text-left mb-10 border-b border-[#141419] pb-6">
                 <h2 className="text-2xl font-black text-white uppercase tracking-tight">Compilador de Estructura</h2>
-                <p className="text-xs text-slate-500 mt-1 font-mono">Carga el documento WORD para realizar el mapeo molecular del texto.</p>
+                <p className="text-xs text-slate-500 mt-1 font-mono">Carga el payload binario para realizar el mapeo molecular del texto.</p>
               </div>
 
               <AnimatePresence mode="wait">
