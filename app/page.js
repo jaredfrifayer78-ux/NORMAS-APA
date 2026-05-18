@@ -3,7 +3,7 @@ import { useState, useRef } from 'react';
 import mammoth from 'mammoth';
 import { Document, Packer, Paragraph, TextRun, AlignmentType } from 'docx';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
-import { UploadCloud, FileText, CheckCircle, Loader2, ChevronLeft, ArrowRight, Layers, FileCheck2, Code } from 'lucide-react';
+import { UploadCloud, FileText, CheckCircle, Loader2, ChevronLeft, ArrowRight, Layers, FileCheck2, Code, AlertTriangle } from 'lucide-react';
 
 export default function Home() {
   const [view, setView] = useState('landing');
@@ -11,11 +11,9 @@ export default function Home() {
   const [status, setStatus] = useState('idle'); 
   const [loadingText, setLoadingText] = useState('');
 
-  // Referencia para capturar el scroll de la página al estilo Figma
   const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({ target: containerRef });
   
-  // Animaciones reactivas al scroll (Scroll-Driven)
   const heroScale = useTransform(scrollYProgress, [0, 0.2], [1, 0.95]);
   const heroOpacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
   const bentoY = useTransform(scrollYProgress, [0, 0.3], [100, 0]);
@@ -152,7 +150,7 @@ export default function Home() {
             className="pt-32 pb-32 max-w-7xl mx-auto px-6 relative z-10"
           >
             {/* Hero Seccion con Tipografía de Impacto */}
-            <motion.div style={{ scale: heroScale, opacity: heroOpacity }} className="text-left max-w-5xl mb-32 pt-10">
+            <motion.div style={{ scale: heroScale, opacity: heroOpacity }} className="text-left max-w-5xl mb-24 pt-10">
               <p className="font-mono text-xs uppercase tracking-[0.25em] text-indigo-400 mb-4 font-semibold">
                 // AUTOMATIZACIÓN DE FORMATO ACADÉMICO
               </p>
@@ -175,14 +173,14 @@ export default function Home() {
             {/* Bento Grid (Estructura Asimétrica Tipo Figma) */}
             <motion.div style={{ y: bentoY }} className="grid md:grid-cols-3 gap-4 max-w-6xl mx-auto text-left">
               
-              {/* Bloque Grande (Izquierda) */}
+              {/* Bloque 1: Títulos (Izquierda) */}
               <div className="bg-[#131316] border border-[#1f1f24] p-10 rounded-2xl md:col-span-2 flex flex-col justify-between group hover:border-[#2e2e35] transition-colors relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500/5 rounded-full blur-3xl pointer-events-none"></div>
                 <div>
                   <Layers className="text-indigo-400 mb-6 w-8 h-8" />
-                  <h3 className="text-2xl font-bold text-white mb-3 tracking-tight">Jerarquización de Títulos de Nivel 1 y 2</h3>
+                  <h3 className="text-2xl font-bold text-white mb-3 tracking-tight">Normalización de Títulos de Nivel 1 y 2</h3>
                   <p className="text-[#6b6b76] leading-relaxed max-w-md">
-                    El motor identifica títulos escritos accidentalmente en mayúsculas sostenidas y los normaliza automáticamente a mayúsculas iniciales, centrados y en negrita según las normas de la APA.
+                    El motor identifica títulos escritos accidentalmente en mayúsculas sostenidas y los transforma automáticamente a mayúsculas iniciales, centrados y en negrita según el protocolo de la APA.
                   </p>
                 </div>
                 <div className="mt-12 font-mono text-xs text-[#3a3a44] border-t border-[#1f1f24] pt-4 flex gap-4">
@@ -192,7 +190,7 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Bloque Pequeño Alto (Derecha) */}
+              {/* Bloque 2: Geometría de Página (Derecha) */}
               <div className="bg-[#131316] border border-[#1f1f24] p-10 rounded-2xl flex flex-col justify-between group hover:border-[#2e2e35] transition-colors">
                 <div>
                   <FileCheck2 className="text-emerald-400 mb-6 w-8 h-8" />
@@ -206,24 +204,36 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Bloque Inferior Ancho Completo */}
-              <div className="bg-[#131316] border border-[#1f1f24] p-10 rounded-2xl md:col-span-3 flex flex-col md:flex-row items-start md:items-center justify-between group hover:border-[#2e2e35] transition-colors">
-                <div className="max-w-xl">
+              {/* Bloque RESTRICCIÓN (Nuevo bloque Bento de Advertencia Técnica) */}
+              <div className="bg-[#131316] border border-[#1f1f24] p-10 rounded-2xl md:col-span-1 flex flex-col justify-between group hover:border-amber-500/30 transition-colors relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/5 rounded-full blur-2xl pointer-events-none"></div>
+                <div>
+                  <AlertTriangle className="text-amber-500 mb-6 w-8 h-8" />
+                  <h3 className="text-2xl font-bold text-white mb-3 tracking-tight">Alcance del Motor</h3>
+                  <p className="text-[#6b6b76] text-sm leading-relaxed">
+                    Esta herramienta se enfoca estrictamente en perfeccionar la **estructura semántica y el texto crudo**. Si tu documento de origen contiene objetos complejos como <span className="text-amber-500/80 font-medium">tablas o imágenes, estas no se exportarán</span>.
+                  </p>
+                </div>
+                <div className="mt-6 font-mono text-[10px] text-amber-500/60 bg-amber-500/5 border border-amber-500/10 p-3 rounded-lg">
+                  // REGLA: Aplica el formato aquí y luego reinserta tus gráficos por copiado clásico en el Word final.
+                </div>
+              </div>
+
+              {/* Bloque Privacidad (Abajo Derecha - Ancho 2 columnas) */}
+              <div className="bg-[#131316] border border-[#1f1f24] p-10 rounded-2xl md:col-span-2 flex flex-col justify-between group hover:border-[#2e2e35] transition-colors">
+                <div>
                   <div className="flex items-center gap-3 mb-4">
                     <Code className="text-blue-400 w-6 h-6" />
                     <span className="font-mono text-xs uppercase tracking-wider text-blue-400 font-bold">Procesamiento Local</span>
                   </div>
                   <h3 className="text-2xl font-bold text-white mb-2 tracking-tight">Privacidad por Arquitectura</h3>
                   <p className="text-[#6b6b76] leading-relaxed">
-                    La extracción del texto binario se ejecuta por completo del lado del cliente usando el buffer del navegador. Tu investigación confidencial jamás toca un almacenamiento permanente.
+                    La extracción binaria se ejecuta por completo del lado del cliente usando la memoria efímera del navegador. Tus investigaciones confidenciales jamás tocan un almacenamiento secundario.
                   </p>
                 </div>
-                <button 
-                  onClick={() => setView('app')}
-                  className="mt-6 md:mt-0 font-mono text-xs font-bold uppercase tracking-wider px-6 py-3 border border-[#1f1f24] group-hover:border-white rounded transition-colors text-white"
-                >
-                  Ver especificaciones técnicas
-                </button>
+                <div className="mt-6 font-mono text-xs text-[#3a3a44]">
+                  [CLIENT_SIDE_PARSING: TRUE]
+                </div>
               </div>
 
             </motion.div>
