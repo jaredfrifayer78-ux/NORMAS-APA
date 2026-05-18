@@ -152,7 +152,7 @@ export default function Home() {
             {/* Hero Seccion con Tipografía de Impacto */}
             <motion.div style={{ scale: heroScale, opacity: heroOpacity }} className="text-left max-w-5xl mb-24 pt-10">
               <p className="font-mono text-xs uppercase tracking-[0.25em] text-indigo-400 mb-4 font-semibold">
-                // AUTOMATIZACIÓN DE FORMATO ACADÉMICO
+                {"// AUTOMATIZACIÓN DE FORMATO ACADÉMICO"}
               </p>
               <h1 className="text-6xl md:text-8xl font-extrabold tracking-tight text-white mb-8 leading-[0.95] font-black">
                 Estructura impecable. <br />
@@ -204,7 +204,7 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Bloque RESTRICCIÓN (Nuevo bloque Bento de Advertencia Técnica) */}
+              {/* Bloque RESTRICCIÓN */}
               <div className="bg-[#131316] border border-[#1f1f24] p-10 rounded-2xl md:col-span-1 flex flex-col justify-between group hover:border-amber-500/30 transition-colors relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/5 rounded-full blur-2xl pointer-events-none"></div>
                 <div>
@@ -215,11 +215,11 @@ export default function Home() {
                   </p>
                 </div>
                 <div className="mt-6 font-mono text-[10px] text-amber-500/60 bg-amber-500/5 border border-amber-500/10 p-3 rounded-lg">
-                  // REGLA: Aplica el formato aquí y luego reinserta tus gráficos por copiado clásico en el Word final.
+                  {"// REGLA: Aplica el formato aquí y luego reinserta tus gráficos por copiado clásico en el Word final."}
                 </div>
               </div>
 
-              {/* Bloque Privacidad (Abajo Derecha - Ancho 2 columnas) */}
+              {/* Bloque Privacidad */}
               <div className="bg-[#131316] border border-[#1f1f24] p-10 rounded-2xl md:col-span-2 flex flex-col justify-between group hover:border-[#2e2e35] transition-colors">
                 <div>
                   <div className="flex items-center gap-3 mb-4">
